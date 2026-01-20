@@ -1,0 +1,17 @@
+{
+    "BasedOnStyle": "Google",
+    "IndentWidth": 4,
+    "AccessModifierOffset": -4,
+    "ContinuationIndentWidth": 4,
+    "BreakBeforeBraces": "Attach",
+    "AllowShortFunctionsOnASingleLine": "All",
+    "PointerAlignment": "Right",
+    "ColumnLimit": 120,
+    "SpaceAfterCStyleCast": false,
+    "SpaceBeforeAssignmentOperators": true,
+    "AlignTrailingComments": true,
+    "UseTab": "Never",
+    "NamespaceIndentation": "None",
+    "SortIncludes": true, 
+    "TabWidth": 4      
+}
