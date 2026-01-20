@@ -43,7 +43,14 @@ include_directories(
 file(GLOB_RECURSE TINYLOG_SOURCES
     ${PROJECT_SOURCE_DIR}/src/*.cc
     ${PROJECT_SOURCE_DIR}/src/internal/*.cc
+    ${PROJECT_SOURCE_DIR}/src/utils.cc
+    ${PROJECT_SOURCE_DIR}/src/log_config.cc
+    ${PROJECT_SOURCE_DIR}/src/log_manager.cc
+    ${PROJECT_SOURCE_DIR}/src/logger.cc
 )
+
+# 排除旧的sink目录下的文件，只使用internal目录下的新实现
+list(FILTER TINYLOG_SOURCES EXCLUDE REGEX ".*/src/sink/.*\.cc$")
 
 file(GLOB_RECURSE TINYLOG_HEADERS
     ${PROJECT_SOURCE_DIR}/include/*.h
