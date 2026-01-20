@@ -18,42 +18,61 @@ A tiny, lightweight and extensible logging library for C++17.
 
 ### Prerequisites
 
-- Autotools (autoconf, automake, libtool)
+- CMake 3.16+
 - C++17 compatible compiler (GCC 7+, Clang 5+, MSVC 2017+)
 
 ### Build Steps
 
 ```bash
-# Bootstrap the build system
-./bootstrap.sh
+# Create build directory
+mkdir -p build && cd build
 
 # Configure the build
-./configure
+cmake ..
 
 # Build the library and tests
-make
+make -j$(nproc)
 
 # Run tests
-make check
+ctest
 
 # Install the library (requires root privileges)
 sudo make install
 ```
 
-### Configure Options
+### Build Options
 
 ```bash
 # Specify installation prefix
-./configure --prefix=/usr/local
+cmake .. -DCMAKE_INSTALL_PREFIX=/usr/local
 
-# Build only static library
-./configure --disable-shared
+# Build Release mode
+cmake .. -DCMAKE_BUILD_TYPE=Release
 
-# Build only shared library
-./configure --disable-static
+# Build shared library instead of static library
+cmake .. -DBUILD_SHARED_LIBS=ON
 
-# Enable debug mode
-./configure --enable-debug
+# Disable tests
+cmake .. -DBUILD_TESTING=OFF
+
+# Disable pkg-config file generation
+cmake .. -DENABLE_PKG_CONFIG=OFF
+```
+
+### Multi-Configuration Build Systems (e.g., Visual Studio)
+
+```bash
+# Create build directory
+mkdir -p build && cd build
+
+# Configure the build
+cmake .. -G "Visual Studio 16 2019" -A x64
+
+# Build the library (Release mode)
+cmake --build . --config Release
+
+# Install the library
+cmake --install . --config Release
 ```
 
 ## Usage

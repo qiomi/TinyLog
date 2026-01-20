@@ -1,9 +1,11 @@
 #include "tinylog/internal/log_utils.h"
+
+#include <sys/stat.h>
+
+#include <algorithm>
 #include <ctime>
 #include <fstream>
 #include <string>
-#include <algorithm>
-#include <sys/stat.h>
 
 namespace tinylog::internal {
 
@@ -11,7 +13,7 @@ std::string GetCurrentTimestamp() {
     time_t now = time(nullptr);
     struct tm local_time;
     localtime_r(&now, &local_time);
-    
+
     char buffer[32];
     strftime(buffer, sizeof(buffer), "%Y-%m-%d %H:%M:%S", &local_time);
     return std::string(buffer);
@@ -37,7 +39,7 @@ const char* LogLevelToString(LogLevel level) {
 LogLevel StringToLogLevel(const std::string& level_str) {
     std::string lower_str = level_str;
     std::transform(lower_str.begin(), lower_str.end(), lower_str.begin(), ::tolower);
-    
+
     if (lower_str == "debug") {
         return LogLevel::kDebug;
     } else if (lower_str == "info") {
@@ -69,7 +71,7 @@ std::string LogSinkToString(LogSink sink) {
 LogSink StringToLogSink(const std::string& sink_str) {
     std::string lower_str = sink_str;
     std::transform(lower_str.begin(), lower_str.end(), lower_str.begin(), ::tolower);
-    
+
     if (lower_str == "console") {
         return LogSink::kConsole;
     } else if (lower_str == "file") {
@@ -88,7 +90,7 @@ void Trim(std::string& str) {
         str.clear();
         return;
     }
-    
+
     // 去除结尾的空格和制表符
     size_t end = str.find_last_not_of(" \t");
     str = str.substr(start, end - start + 1);
@@ -99,13 +101,13 @@ time_t GetFileLastModifiedTime(const std::string& file_path) {
     if (!file) {
         return 0;
     }
-    
+
     time_t last_modified = 0;
     struct stat file_stat;
     if (stat(file_path.c_str(), &file_stat) == 0) {
         last_modified = file_stat.st_mtime;
     }
-    
+
     file.close();
     return last_modified;
 }
